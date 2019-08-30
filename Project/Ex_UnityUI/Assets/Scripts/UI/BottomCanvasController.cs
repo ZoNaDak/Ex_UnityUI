@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BottomCanvasController : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+namespace EX_UnityUI.UI.BottomCanvas {
+    public class BottomCanvasController : MonoBehaviour {
+        public BottomUIButtonCotroller[] ButtonArray;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [RuntimeInitializeOnLoadMethod]
+        public void Test() {
+            
+        }
     }
 }

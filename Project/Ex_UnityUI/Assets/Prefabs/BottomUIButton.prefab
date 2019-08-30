@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 2390358944310741513}
   - component: {fileID: 8863803536837240023}
   - component: {fileID: 8606891844043755490}
+  - component: {fileID: 1193539877545628595}
   m_Layer: 5
-  m_Name: Button_1
+  m_Name: BottomUIButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,3 +122,15 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1193539877545628595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6431465009074696614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ead015da9dd2cb42a295d8be68e31ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
