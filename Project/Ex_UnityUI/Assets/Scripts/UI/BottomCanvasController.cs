@@ -6,9 +6,10 @@ namespace EX_UnityUI.UI.BottomCanvas {
     public class BottomCanvasController : MonoBehaviour {
         public BottomUIButtonCotroller[] ButtonArray;
 
-        [RuntimeInitializeOnLoadMethod]
-        public void Test() {
-            
+        void Start() {
+            for(int i = 0; i < this.ButtonArray.Length; ++i) {
+                this.ButtonArray[i].SetType((ButtonType)i);
+            }
         }
     }
 }
