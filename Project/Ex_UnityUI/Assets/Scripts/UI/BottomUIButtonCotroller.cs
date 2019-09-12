@@ -12,6 +12,8 @@ namespace EX_UnityUI.UI.BottomCanvas {
         private RectTransform rectTransform;
         private ButtonType type;
 
+        public RectTransform RectTransform { get { return this.rectTransform; } }
+
         void Awake() {
             this.rectTransform = this.transform as RectTransform;
         }
