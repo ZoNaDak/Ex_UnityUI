@@ -9,14 +9,9 @@ namespace EX_UnityUI.UI.BottomCanvas {
         const float BUTTONCOVER_MOVE_SPEED = 5f;
         public BottomUIButtonCotroller[] ButtonArray;
         public RectTransform ButtonCover;
-
-        private RectTransform rectTransform;
+        public RectTransform ButtonParent;
 
         private Coroutine buttonCoverMoveCoroutine;
-
-        void Awake() {
-            this.rectTransform = this.transform as RectTransform;
-        }
 
         void Start() {
             for(int i = 0; i < this.ButtonArray.Length; ++i) {
@@ -44,7 +39,7 @@ namespace EX_UnityUI.UI.BottomCanvas {
         //Coroutine#########################################################################
         private IEnumerator RebuildLayout(BottomUIButtonCotroller _caller) {
             while(true) {
-                LayoutRebuilder.ForceRebuildLayoutImmediate(this.rectTransform);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(this.ButtonParent);
                 if(_caller.transform.localScale.x == BottomUIButtonCotroller.CLICKED_SCALE_X) {
                     break;
                 }
