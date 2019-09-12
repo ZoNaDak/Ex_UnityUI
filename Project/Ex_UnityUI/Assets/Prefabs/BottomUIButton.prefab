@@ -112,9 +112,9 @@ MonoBehaviour:
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Deinteractable
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selelcted
+    m_HighlightedTrigger: None
+    m_PressedTrigger: None
+    m_SelectedTrigger: None
     m_DisabledTrigger: Interactable
   m_Interactable: 1
   m_TargetGraphic: {fileID: 8863803536837240023}
@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ead015da9dd2cb42a295d8be68e31ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  button: {fileID: 8606891844043755490}
 --- !u!95 &4165072462143457170
 Animator:
   serializedVersion: 3

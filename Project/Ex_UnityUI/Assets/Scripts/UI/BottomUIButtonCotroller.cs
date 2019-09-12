@@ -6,8 +6,9 @@ using UnityEngine.UI;
 namespace EX_UnityUI.UI.BottomCanvas {
     public enum ButtonType { ONE, TWO, THREE, FOUR, FIVE, END }
     public class BottomUIButtonCotroller : MonoBehaviour {
+        public Button button;
+
         private RectTransform rectTransform;
-        private Button button;
         private ButtonType type;
 
         void Awake() {
@@ -24,6 +25,7 @@ namespace EX_UnityUI.UI.BottomCanvas {
 
         public void Click() {
             this.button.interactable = false;
+            BottomCanvasController.Instance.DeclickButtons(this);
         }
 
         public void Declick() {
