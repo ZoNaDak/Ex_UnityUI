@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 1340731909099297877}
   - component: {fileID: 5373585684768727361}
   - component: {fileID: 9076860723191402723}
+  - component: {fileID: 2393412316379951325}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -234,6 +235,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2393412316379951325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7705537762916477548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 0.3, y: -0.3}
+  m_UseGraphicAlpha: 1
 --- !u!1 &8114128386604028788
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,7 +320,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_padding: 0
   m_canvasRenderer: {fileID: 753053638741031298}
   m_TextComponent: {fileID: 1874696408295114291}
   m_materialReferenceIndex: 1
