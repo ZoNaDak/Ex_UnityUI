@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using EX_UnityUI.UI.MainCanvas;
 
 namespace EX_UnityUI.UI.BottomCanvas {
-    public enum ButtonType { ONE, TWO, THREE, FOUR, FIVE, END }
     public class BottomUIButtonCotroller : MonoBehaviour {
         public const float CLICKED_SCALE_X = 1.7f;
         public Button Button;
         public BottomUIButtonFrontController ButtonFront;
 
         private RectTransform rectTransform;
-        private ButtonType type;
+        private ScreenType type;
 
         public RectTransform RectTransform { get { return this.rectTransform; } }
 
@@ -23,7 +23,7 @@ namespace EX_UnityUI.UI.BottomCanvas {
             this.rectTransform.localScale = new Vector2(1, 1);
         }
 
-        public void SetType(ButtonType _type, bool _isActivated){
+        public void SetType(ScreenType _type, bool _isActivated){
             this.type = _type;
             if(_isActivated) {
                 Click();
@@ -42,6 +42,7 @@ namespace EX_UnityUI.UI.BottomCanvas {
             this.Button.interactable = false;
             this.ButtonFront.Activate(this.rectTransform);
             BottomCanvasController.Instance.DeclickButtons(this);
+            MainScreenManager.Instance.MoveScreen(this.type);
         }
 
         public void Declick() {

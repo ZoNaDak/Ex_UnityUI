@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using EX_UnityUI.Singleton;
+using EX_UnityUI.UI.MainCanvas;
 
 namespace EX_UnityUI.UI.BottomCanvas {
     public class BottomCanvasController : MonoSingleton<BottomCanvasController> {
@@ -15,10 +16,10 @@ namespace EX_UnityUI.UI.BottomCanvas {
 
         void Start() {
             for(int i = 0; i < this.ButtonArray.Length; ++i) {
-                if(i == (int)ButtonType.THREE) {
-                    this.ButtonArray[i].SetType((ButtonType)i, true);
+                if(i == (int)ScreenType.STAGE) {
+                    this.ButtonArray[i].SetType((ScreenType)i, true);
                 } else {
-                    this.ButtonArray[i].SetType((ButtonType)i, false);
+                    this.ButtonArray[i].SetType((ScreenType)i, false);
                 }
             }
         }
