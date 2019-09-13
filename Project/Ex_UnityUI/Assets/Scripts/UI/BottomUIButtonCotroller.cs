@@ -7,7 +7,8 @@ namespace EX_UnityUI.UI.BottomCanvas {
     public enum ButtonType { ONE, TWO, THREE, FOUR, FIVE, END }
     public class BottomUIButtonCotroller : MonoBehaviour {
         public const float CLICKED_SCALE_X = 1.7f;
-        public Button button;
+        public Button Button;
+        public BottomUIButtonFrontController ButtonFront;
 
         private RectTransform rectTransform;
         private ButtonType type;
@@ -29,13 +30,24 @@ namespace EX_UnityUI.UI.BottomCanvas {
             }
         }
 
+        public void UpdateButtonFrontPos() {
+            this.ButtonFront.transform.position = new Vector3(
+                this.transform.position.x, 
+                this.ButtonFront.transform.position.y,
+                this.ButtonFront.transform.position.z);
+        }
+
+        //Button Click Function#########################################################################
         public void Click() {
-            this.button.interactable = false;
+            this.Button.interactable = false;
+            this.ButtonFront.Activate(this.rectTransform);
             BottomCanvasController.Instance.DeclickButtons(this);
         }
 
         public void Declick() {
-            this.button.interactable = true;
+            this.Button.interactable = true;
+            this.ButtonFront.Deactivate(this.rectTransform);
         }
+        //##############################################################################################
     }
 }

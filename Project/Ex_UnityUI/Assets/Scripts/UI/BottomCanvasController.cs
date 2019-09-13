@@ -6,7 +6,7 @@ using EX_UnityUI.Singleton;
 
 namespace EX_UnityUI.UI.BottomCanvas {
     public class BottomCanvasController : MonoSingleton<BottomCanvasController> {
-        const float BUTTONCOVER_MOVE_SPEED = 5f;
+        const float BUTTONCOVER_MOVE_SPEED = 6f;
         public BottomUIButtonCotroller[] ButtonArray;
         public RectTransform ButtonCover;
         public RectTransform ButtonParent;
@@ -40,6 +40,9 @@ namespace EX_UnityUI.UI.BottomCanvas {
         private IEnumerator RebuildLayout(BottomUIButtonCotroller _caller) {
             while(true) {
                 LayoutRebuilder.ForceRebuildLayoutImmediate(this.ButtonParent);
+                for(int i = 0; i < this.ButtonArray.Length; ++i) {
+                    this.ButtonArray[i].UpdateButtonFrontPos();
+                }
                 if(_caller.transform.localScale.x == BottomUIButtonCotroller.CLICKED_SCALE_X) {
                     break;
                 }
@@ -49,12 +52,13 @@ namespace EX_UnityUI.UI.BottomCanvas {
 
         private IEnumerator MoveButtonCover(BottomUIButtonCotroller _caller) {
             while(true) {
-                Vector2 moveDir = _caller.RectTransform.position - this.ButtonCover.position;
-                if(moveDir.magnitude <= BUTTONCOVER_MOVE_SPEED * Time.deltaTime) {
-                    this.ButtonCover.position = _caller.RectTransform.position;
+                Vector2 moveDir = _caller.RectTransform.localPosition - this.ButtonCover.localPosition;
+                if(_caller.transform.localScale.x == BottomUIButtonCotroller.CLICKED_SCALE_X 
+                    && moveDir.magnitude <= BUTTONCOVER_MOVE_SPEED * Time.deltaTime) {
+                    this.ButtonCover.localPosition = _caller.RectTransform.localPosition;
                     break;
                 }
-                this.ButtonCover.position += (_caller.RectTransform.position - this.ButtonCover.position) * BUTTONCOVER_MOVE_SPEED * Time.deltaTime;
+                this.ButtonCover.localPosition += (Vector3)moveDir * BUTTONCOVER_MOVE_SPEED * Time.deltaTime;
                 yield return null;
             }
             this.buttonCoverMoveCoroutine = null;
