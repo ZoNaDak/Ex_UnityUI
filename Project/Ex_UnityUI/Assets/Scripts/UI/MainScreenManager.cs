@@ -23,6 +23,14 @@ namespace EX_UnityUI.UI.MainCanvas {
         }
 
         public void MoveScreen(ScreenType _type) {
+            for(int i = 0; i < this.MainScreenArray.Length; ++i) {
+                if(i == (int)_type) {
+                    this.MainScreenArray[i].SetActivate(true);
+                } else {
+                    this.MainScreenArray[i].SetActivate(false);
+                }
+            }
+
             if(this.moveScreenAnimationCoroutine != null) {
                 StopCoroutine(this.moveScreenAnimationCoroutine);
             }
