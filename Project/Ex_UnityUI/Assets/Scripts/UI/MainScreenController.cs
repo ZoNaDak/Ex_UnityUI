@@ -31,15 +31,10 @@ namespace EX_UnityUI.UI.MainCanvas {
         private bool CheckTouchScreen() {
             if(InputManager.Instance.TouchCount > 0) {
                 for(int i = 0; i < InputManager.Instance.TouchCount; ++i) {
-                    /*
-                    Touch touch = Input.GetTouch(i);
-                    if(this.RectTransform.rect.Contains(touch.deltaPosition)) {
-                        Debug.Log("Hi");
+                    if(InputManager.Instance.CheckTouchArea(this.RectTransform)) {
                         return true;
-                    }*/
-                    Debug.Log(i);
+                    }
                 }
-                this.state = ScreenState.MOVE;
             }
 
             return false;
@@ -48,6 +43,7 @@ namespace EX_UnityUI.UI.MainCanvas {
         //Coroutine######
         private IEnumerator DragScreen() {
             this.state = ScreenState.MOVE;
+            Debug.LogWarning("Hi");
 
             while(true){
                 yield return null;
