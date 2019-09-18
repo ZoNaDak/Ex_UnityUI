@@ -27,6 +27,10 @@ namespace EX_UnityUI.MyInput {
             return RectTransformUtility.RectangleContainsScreenPoint(_rectTransform, touchPos);
         }
 
+        public Vector2 GetTouchPos() {
+            return GetTouchPos(this.TouchCount - 1);
+        }
+
         public Vector2 GetTouchPos(int _idx) {
             Vector2 pos = new Vector2();
             

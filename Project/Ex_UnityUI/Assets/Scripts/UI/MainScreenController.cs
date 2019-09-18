@@ -4,48 +4,33 @@ using UnityEngine;
 using EX_UnityUI.MyInput;
 
 namespace EX_UnityUI.UI.MainCanvas {
-    public enum ScreenState { OFF, IDLE, MOVE, END}
     public class MainScreenController : MonoBehaviour {
+        
+
         public RectTransform RectTransform;
 
-        private ScreenState state;
+        private InputManager inputManager;
 
         void Awake() {
-            this.state = ScreenState.OFF;
+            this.inputManager = InputManager.Instance;
         }
 
-        void Update() {
-            if(this.state == ScreenState.IDLE && CheckTouchScreen()) {
-                StartCoroutine(DragScreen());
-            }
-        }
-
-        public void SetActivate(bool _isActivate) {
-            if(_isActivate) {
-                this.state = ScreenState.IDLE;
-            } else {
-                this.state = ScreenState.OFF;
-            }
-        }
-
-        private bool CheckTouchScreen() {
-            if(InputManager.Instance.TouchCount > 0) {
-                for(int i = 0; i < InputManager.Instance.TouchCount; ++i) {
-                    if(InputManager.Instance.CheckTouchArea(this.RectTransform)) {
+        internal bool CheckTouchScreen() {
+            if(this.inputManager.TouchCount > 0) {
+                for(int i = 0; i < this.inputManager.TouchCount; ++i) {
+                    if(this.inputManager.CheckTouchArea(this.RectTransform)) {
                         return true;
                     }
                 }
             }
-
             return false;
         }
-
         //Coroutine######
-        private IEnumerator DragScreen() {
-            this.state = ScreenState.MOVE;
-            Debug.LogWarning("Hi");
+        
 
-            while(true){
+        private IEnumerator GoBackIdlePos() {
+            this.transform.localPosition = new Vector2();
+            while(true) {
                 yield return null;
             }
         }
