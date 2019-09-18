@@ -15,7 +15,7 @@ namespace EX_UnityUI.UI.MainCanvas {
         const float SCREEN_MOVE_SPEED_MIN = 70f;
         const float SCREEN_MOVE_SPEED_LERP = 7.5f;
         const float TOUCH_LERP_MOVE_SPEED = 6f;
-        const float REFERENCE_SPEED_FOR_SCREEN_MOVE = 10f;
+        const float REFERENCE_SPEED_FOR_SCREEN_MOVE = 600f;
 
         public MainScreenController[] MainScreenArray;
 
@@ -76,7 +76,8 @@ namespace EX_UnityUI.UI.MainCanvas {
 
         private eDirection CheckScreenDragSpeed() {
             
-            float screenSpeed = this.transform.localPosition.x - this.preLocalPosition.x;
+            float screenSpeed = (this.transform.localPosition.x - this.preLocalPosition.x) / Time.deltaTime;
+            Debug.LogWarning(screenSpeed);
             
             if(this.currentType != 0 && screenSpeed >= REFERENCE_SPEED_FOR_SCREEN_MOVE) {
                 return eDirection.LEFT;
