@@ -37,6 +37,10 @@ namespace EX_UnityUI.UI.BottomCanvas {
             this.buttonCoverMoveCoroutine = StartCoroutine(MoveButtonCover(_caller));
         }
 
+        public void FollowButtonCoverToMainScreen(Vector2 _screenPos) {
+            //this.ButtonCover.transform.position = new Vector2()
+        }
+
         //Coroutine#########################################################################
         private IEnumerator RebuildLayout(BottomUIButtonCotroller _caller) {
             while(true) {

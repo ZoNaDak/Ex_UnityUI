@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using EX_UnityUI.Singleton;
 using EX_UnityUI.MyInput;
 using EX_UnityUI.MyEnum;
+using EX_UnityUI.UI.BottomCanvas;
 
 namespace EX_UnityUI.UI.MainCanvas {
     public enum ScreenType { SHOP, EQUIPMENT, STAGE, ABILITY, SETTING, END }
@@ -14,7 +15,7 @@ namespace EX_UnityUI.UI.MainCanvas {
         const float SCREEN_MOVE_SPEED_MIN = 70f;
         const float SCREEN_MOVE_SPEED_LERP = 7.5f;
         const float TOUCH_LERP_MOVE_SPEED = 6f;
-        const float RAFERENCE_RATE_FOR_SCREEN_MOVE = 0.35f;
+        const float REFERENCE_SPEED_FOR_SCREEN_MOVE = 10f;
 
         public MainScreenController[] MainScreenArray;
 
@@ -23,6 +24,7 @@ namespace EX_UnityUI.UI.MainCanvas {
         private ScreenState state;
         private float screenSize_X;
         private float screenSpace_X;
+        private Vector2 preLocalPosition;
 
         private Coroutine moveScreenCoroutine;
 
@@ -72,13 +74,13 @@ namespace EX_UnityUI.UI.MainCanvas {
             return this.MainScreenArray[(int)this.CurrentType].CheckTouchScreen();
         }
 
-        private eDirection CheckScreenDragSpace() {
-            float screenDistance = GetDestPos(this.currentType).x - this.transform.localPosition.x;
-            float referenceDistance = this.screenSize_X * RAFERENCE_RATE_FOR_SCREEN_MOVE;
+        private eDirection CheckScreenDragSpeed() {
             
-            if(this.currentType != 0 && screenDistance <= -referenceDistance) {
+            float screenSpeed = this.transform.localPosition.x - this.preLocalPosition.x;
+            
+            if(this.currentType != 0 && screenSpeed >= REFERENCE_SPEED_FOR_SCREEN_MOVE) {
                 return eDirection.LEFT;
-            } else if(this.currentType != ScreenType.END - 1 && screenDistance >= referenceDistance) {
+            } else if(this.currentType != ScreenType.END - 1 && screenSpeed <= -REFERENCE_SPEED_FOR_SCREEN_MOVE) {
                 return eDirection.RIGHT;
             } else {
                 return eDirection.NONE;
@@ -112,11 +114,12 @@ namespace EX_UnityUI.UI.MainCanvas {
                 if(this.inputManager.TouchCount == 0) {
                     break;
                 }
+                this.preLocalPosition = this.transform.localPosition;
                 FollowTouch();
                 yield return null;
             }
 
-            switch(CheckScreenDragSpace()) {
+            switch(CheckScreenDragSpeed()) {
                 case eDirection.LEFT:
                     MoveScreen(this.currentType - 1);
                     break;
