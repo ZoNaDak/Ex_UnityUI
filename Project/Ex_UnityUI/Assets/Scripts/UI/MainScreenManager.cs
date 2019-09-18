@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using EX_UnityUI.Singleton;
 using EX_UnityUI.MyInput;
+using EX_UnityUI.MyEnum;
 
 namespace EX_UnityUI.UI.MainCanvas {
     public enum ScreenType { SHOP, EQUIPMENT, STAGE, ABILITY, SETTING, END }
@@ -13,6 +14,7 @@ namespace EX_UnityUI.UI.MainCanvas {
         const float SCREEN_MOVE_SPEED_MIN = 70f;
         const float SCREEN_MOVE_SPEED_LERP = 7.5f;
         const float TOUCH_LERP_MOVE_SPEED = 6f;
+        const float RAFERENCE_RATE_FOR_SCREEN_MOVE = 0.35f;
 
         public MainScreenController[] MainScreenArray;
 
@@ -52,7 +54,7 @@ namespace EX_UnityUI.UI.MainCanvas {
             if(this.moveScreenCoroutine != null) {
                 StopCoroutine(this.moveScreenCoroutine);
             }
-            this.moveScreenCoroutine = StartCoroutine(MoveScreenAnimation(CalculateDestPos(_type)));
+            this.moveScreenCoroutine = StartCoroutine(MoveScreenAnimation(GetDestPos(_type)));
         }
 
         private void FollowTouch() {
@@ -63,14 +65,27 @@ namespace EX_UnityUI.UI.MainCanvas {
         }
 
         private void GoBackIdlePos() {
-            this.moveScreenCoroutine = StartCoroutine(MoveScreenAnimation(CalculateDestPos(this.currentType)));
+            this.moveScreenCoroutine = StartCoroutine(MoveScreenAnimation(GetDestPos(this.currentType)));
         }
 
         private bool CheckTouchScreen() {
             return this.MainScreenArray[(int)this.CurrentType].CheckTouchScreen();
         }
 
-        private Vector2 CalculateDestPos(ScreenType _type) {
+        private eDirection CheckScreenDragSpace() {
+            float screenDistance = GetDestPos(this.currentType).x - this.transform.localPosition.x;
+            float referenceDistance = this.screenSize_X * RAFERENCE_RATE_FOR_SCREEN_MOVE;
+            
+            if(this.currentType != 0 && screenDistance <= -referenceDistance) {
+                return eDirection.LEFT;
+            } else if(this.currentType != ScreenType.END - 1 && screenDistance >= referenceDistance) {
+                return eDirection.RIGHT;
+            } else {
+                return eDirection.NONE;
+            }
+        }
+
+        private Vector2 GetDestPos(ScreenType _type) {
             Vector2 dest = new Vector2(-(screenSize_X + screenSpace_X) * (int)_type - screenSize_X * 0.5f, this.transform.localPosition.y);
             return dest;
         }
@@ -101,7 +116,17 @@ namespace EX_UnityUI.UI.MainCanvas {
                 yield return null;
             }
 
-            GoBackIdlePos();
+            switch(CheckScreenDragSpace()) {
+                case eDirection.LEFT:
+                    MoveScreen(this.currentType - 1);
+                    break;
+                case eDirection.RIGHT:
+                    MoveScreen(this.currentType + 1);
+                    break;
+                default:
+                    GoBackIdlePos();
+                    break;    
+            }
         }
         //###################################################################################
     }
