@@ -25,15 +25,5 @@ namespace EX_UnityUI.UI.MainCanvas {
             }
             return false;
         }
-        //Coroutine######
-        
-
-        private IEnumerator GoBackIdlePos() {
-            this.transform.localPosition = new Vector2();
-            while(true) {
-                yield return null;
-            }
-        }
-        //###############
     }
 }

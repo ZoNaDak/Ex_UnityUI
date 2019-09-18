@@ -39,6 +39,10 @@ namespace EX_UnityUI.UI.BottomCanvas {
 
         //Button Click Function#########################################################################
         public void Click() {
+            if(MainScreenManager.Instance.State != ScreenState.IDLE) {
+                return;
+            }
+
             this.Button.interactable = false;
             this.ButtonFront.Activate(this.rectTransform);
             BottomCanvasController.Instance.DeclickButtons(this);

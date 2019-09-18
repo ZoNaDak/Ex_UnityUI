@@ -12,7 +12,7 @@ namespace EX_UnityUI.UI.MainCanvas {
     public class MainScreenManager : MonoSingleton<MainScreenManager> {
         const float SCREEN_MOVE_SPEED_MIN = 70f;
         const float SCREEN_MOVE_SPEED_LERP = 7.5f;
-        const float TOUCH_LERP_MOVE_SPEED = 5f;
+        const float TOUCH_LERP_MOVE_SPEED = 6f;
 
         public MainScreenController[] MainScreenArray;
 
@@ -24,7 +24,10 @@ namespace EX_UnityUI.UI.MainCanvas {
 
         private Coroutine moveScreenCoroutine;
 
-        public ScreenType CurrentType { get { return this.currentType; } }
+        public ScreenType CurrentType { get { return this.currentType; } }        
+        public ScreenState State { get { return this.state; } }
+
+        private MainScreenController CurrentScreen { get { return this.MainScreenArray[(int)this.CurrentType]; } }
 
         void Awake() {
             this.inputManager = InputManager.Instance;
@@ -54,9 +57,13 @@ namespace EX_UnityUI.UI.MainCanvas {
 
         private void FollowTouch() {
             Vector2 touchPos =  this.inputManager.GetTouchPos();
-            this.transform.position = new Vector2(
-                Mathf.Lerp(this.transform.position.x, touchPos.x, TOUCH_LERP_MOVE_SPEED * Time.deltaTime),
-                this.transform.position.y);
+            this.transform.Translate(new Vector2(
+                Mathf.Lerp(this.CurrentScreen.transform.position.x, touchPos.x, TOUCH_LERP_MOVE_SPEED * Time.deltaTime) - this.CurrentScreen.transform.position.x,
+                0f));
+        }
+
+        private void GoBackIdlePos() {
+            this.moveScreenCoroutine = StartCoroutine(MoveScreenAnimation(CalculateDestPos(this.currentType)));
         }
 
         private bool CheckTouchScreen() {
@@ -94,8 +101,7 @@ namespace EX_UnityUI.UI.MainCanvas {
                 yield return null;
             }
 
-            this.state = ScreenState.IDLE;
-            //this.moveScreenCoroutine = StartCoroutine(GoBackIdlePos());
+            GoBackIdlePos();
         }
         //###################################################################################
     }
