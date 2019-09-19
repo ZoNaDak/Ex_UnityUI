@@ -14,6 +14,7 @@ namespace EX_UnityUI.UI.BottomCanvas {
         private ScreenType type;
 
         public RectTransform RectTransform { get { return this.rectTransform; } }
+        public ScreenType Type { get { return this.type; } }
 
         void Awake() {
             this.rectTransform = this.transform as RectTransform;
@@ -37,6 +38,11 @@ namespace EX_UnityUI.UI.BottomCanvas {
                 this.ButtonFront.transform.position.z);
         }
 
+        public void Activate() {
+            this.Button.interactable = false;
+            this.ButtonFront.Activate(this.rectTransform);
+        }
+
         //Button Click Function#########################################################################
         public void Click() {
             if(MainScreenManager.Instance.State != ScreenState.IDLE) {
@@ -45,7 +51,7 @@ namespace EX_UnityUI.UI.BottomCanvas {
 
             this.Button.interactable = false;
             this.ButtonFront.Activate(this.rectTransform);
-            BottomCanvasController.Instance.DeclickButtons(this);
+            BottomCanvasController.Instance.SetCurrentButton(this);
             MainScreenManager.Instance.MoveScreen(this.type);
         }
 

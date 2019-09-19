@@ -49,9 +49,10 @@ namespace EX_UnityUI.UI.MainCanvas {
                 StartCoroutine(DragScreen());
             }
         }
-
+        
         public void MoveScreen(ScreenType _type) {
             this.currentType = _type;
+            BottomCanvasController.Instance.SetCurrentButton(_type);
 
             if(this.moveScreenCoroutine != null) {
                 StopCoroutine(this.moveScreenCoroutine);
@@ -64,6 +65,8 @@ namespace EX_UnityUI.UI.MainCanvas {
             this.transform.Translate(new Vector2(
                 Mathf.Lerp(this.CurrentScreen.transform.position.x, touchPos.x, TOUCH_LERP_MOVE_SPEED * Time.deltaTime) - this.CurrentScreen.transform.position.x,
                 0f));
+            float moveRate = (GetDestPos(this.currentType).x - this.transform.localPosition.x) / this.screenSize_X;
+            BottomCanvasController.Instance.FollowButtonCoverToMainScreen(moveRate);
         }
 
         private void GoBackIdlePos() {
@@ -75,9 +78,7 @@ namespace EX_UnityUI.UI.MainCanvas {
         }
 
         private eDirection CheckScreenDragSpeed() {
-            
             float screenSpeed = (this.transform.localPosition.x - this.preLocalPosition.x) / Time.deltaTime;
-            Debug.LogWarning(screenSpeed);
             
             if(this.currentType != 0 && screenSpeed >= REFERENCE_SPEED_FOR_SCREEN_MOVE) {
                 return eDirection.LEFT;

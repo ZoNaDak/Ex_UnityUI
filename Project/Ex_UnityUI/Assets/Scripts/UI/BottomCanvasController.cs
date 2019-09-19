@@ -13,10 +13,14 @@ namespace EX_UnityUI.UI.BottomCanvas {
         public RectTransform ButtonParent;
 
         private Coroutine buttonCoverMoveCoroutine;
+        private ScreenType currentButtonType;
+
+        private BottomUIButtonCotroller CurrentButton { get { return this.ButtonArray[(int)this.currentButtonType]; }}
 
         void Start() {
+            this.currentButtonType = ScreenType.STAGE;
             for(int i = 0; i < this.ButtonArray.Length; ++i) {
-                if(i == (int)ScreenType.STAGE) {
+                if(i == (int)this.currentButtonType) {
                     this.ButtonArray[i].SetType((ScreenType)i, true);
                 } else {
                     this.ButtonArray[i].SetType((ScreenType)i, false);
@@ -24,7 +28,8 @@ namespace EX_UnityUI.UI.BottomCanvas {
             }
         }
 
-        public void DeclickButtons(BottomUIButtonCotroller _caller) {
+        public void SetCurrentButton(BottomUIButtonCotroller _caller) {
+            this.currentButtonType = _caller.Type;
             for(int i = 0; i < this.ButtonArray.Length; ++i) {
                 if(this.ButtonArray[i] != _caller) {
                     this.ButtonArray[i].Declick();
@@ -37,8 +42,26 @@ namespace EX_UnityUI.UI.BottomCanvas {
             this.buttonCoverMoveCoroutine = StartCoroutine(MoveButtonCover(_caller));
         }
 
-        public void FollowButtonCoverToMainScreen(Vector2 _screenPos) {
-            //this.ButtonCover.transform.position = new Vector2()
+        public void SetCurrentButton(ScreenType _screenType) {
+            this.ButtonArray[(int)_screenType].Activate();
+            SetCurrentButton(this.ButtonArray[(int)_screenType]);
+        }
+
+        public void FollowButtonCoverToMainScreen(float _moveRate) {
+            if(!CheckIsMoveableButtonCover(_moveRate)) {
+                return;
+            }
+            this.ButtonCover.localPosition = new Vector2(
+                this.CurrentButton.transform.localPosition.x + this.ButtonCover.sizeDelta.x * _moveRate,
+                this.ButtonCover.localPosition.y);
+        }
+
+        private bool CheckIsMoveableButtonCover(float _moveRate) {
+            if((this.currentButtonType == ScreenType.END - 1 && _moveRate >= 0) 
+                || this.currentButtonType == 0 && _moveRate <= 0) {
+                return false;
+            }
+            return true;
         }
 
         //Coroutine#########################################################################
