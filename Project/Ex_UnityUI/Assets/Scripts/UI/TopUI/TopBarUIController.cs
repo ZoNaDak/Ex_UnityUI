@@ -9,8 +9,16 @@ namespace EX_UnityUI.UI.TopCanvas {
         public TextMeshProUGUI Text;
         public Image Guage;
 
-        public void ClickOn() {
+        public void ClickOnEnergy() {
+
+        }
+
+        public void ClickOnGold() {
             
+        }
+
+        public void ClickOnJewel() {
+
         }
     }
 }
